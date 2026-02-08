@@ -12,6 +12,7 @@ These agents cover the documentation lifecycle - writing technical content and r
 |-------|------|---------|
 | [tech-writer](tech-writer.md) | Writer | Creates READMEs, ADRs, runbooks, API references |
 | [doc-reviewer](doc-reviewer.md) | Reviewer | Comprehensive review across 7 quality dimensions |
+| [doc-summarizer](doc-summarizer.md) | Summarizer | Creates structured summaries with section-by-section breakdown |
 
 ## Doc Reviewer Dimensions
 
@@ -52,6 +53,14 @@ Tech-writer creates:
 1. Run doc-reviewer with specific focus areas
 2. Review by dimension (accuracy first, then structure, etc.)
 3. Provide feedback or request changes
+```
+
+### Summarizing Documentation
+```
+1. Use doc-summarizer for section-by-section breakdown
+2. Get overall summary plus chapter summaries
+3. Identify key points and critical takeaways
+4. Use for quick understanding or document overviews
 ```
 
 ## Google Docs Compatibility
