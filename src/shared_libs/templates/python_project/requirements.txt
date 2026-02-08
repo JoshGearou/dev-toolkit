@@ -1,0 +1,13 @@
+# Python Project Requirements
+# 
+# This template uses only Python standard library modules to maintain
+# zero external dependencies, following the shared_libs pattern.
+#
+# If your project needs external packages, add them below:
+# requests>=2.28.0
+# pandas>=1.5.0
+# numpy>=1.21.0
+#
+# To install dependencies:
+#   source .venv/bin/activate
+#   pip install -r requirements.txt

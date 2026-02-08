@@ -1,0 +1,28 @@
+# Shared Libraries Requirements
+#
+# This file intentionally contains no external dependencies.
+# All shared library modules use only Python standard library components:
+# - subprocess, logging, csv, datetime, os, re, shutil, signal, sys, typing
+#
+# This approach ensures:
+# - No version conflicts across different projects
+# - Easy integration into existing Python environments  
+# - Minimal setup requirements for new projects
+# - Consistent behavior across different Python installations
+#
+# Future considerations for optional enhancements:
+# (These would be optional extras, not required dependencies)
+#
+# For enhanced CLI support:
+# click>=8.0.0          # Rich command-line interfaces
+# rich>=10.0.0          # Enhanced console output with colors and formatting
+#
+# For data validation:  
+# pydantic>=1.9.0       # Runtime data validation and settings
+#
+# For testing enhancements:
+# pytest>=6.0.0         # Advanced testing framework
+# pytest-cov>=2.0.0     # Coverage reporting
+#
+# Current philosophy: Keep it simple, standard library only.
+# Add dependencies only when there's a compelling need across multiple projects.

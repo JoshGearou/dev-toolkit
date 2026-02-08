@@ -1,0 +1,12 @@
+[package]
+name = "coverage-demo"
+version = "0.1.0"
+edition = "2021"
+
+[features]
+coverage = []
+nightly = []
+
+[dependencies]
+
+[dev-dependencies]

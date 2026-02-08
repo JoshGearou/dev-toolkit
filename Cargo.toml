@@ -1,0 +1,11 @@
+[workspace]
+resolver = "2"
+members = [
+    "src/todo_tracker",
+]
+exclude = [
+    "src/dispatch_demo",
+    "src/grpc-sample/rust/client",
+    "src/grpc-sample/rust/server",
+    "src/rust_coverage_exclusions/demo",
+]

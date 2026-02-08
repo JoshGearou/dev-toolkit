@@ -1,0 +1,8 @@
+name,value,status,timestamp
+item_0,18,processed,2025-10-10T12:00:00Z
+item_1,19,processed,2025-10-10T12:00:00Z
+item_2,8,processed,2025-10-10T12:00:00Z
+item_3,81,processed,2025-10-10T12:00:00Z
+synthetic_1,42,generated,2025-10-10T12:00:00Z
+synthetic_2,100,generated,2025-10-10T12:00:00Z
+error_case,-1,failed,2025-10-10T12:00:00Z

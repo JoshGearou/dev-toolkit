@@ -1,0 +1,35 @@
+# Set default behavior to auto-detect file types
+* text=auto
+
+# Explicitly mark text files
+*.md text
+*.txt text
+*.json text
+*.yaml text
+*.yml text
+*.toml text
+*.rs text
+*.sh text
+*.py text
+*.js text
+*.ts text
+*.html text
+*.css text
+*.xml text
+*.sql text
+
+# CSV files should show diffs
+*.csv diff
+
+# Binary files
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+*.tar.gz binary
+*.exe binary
+*.dll binary
+*.so binary

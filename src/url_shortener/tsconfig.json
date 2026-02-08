@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "strict": true,
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "types": ["node", "mocha", "chai-http"],
+        "moduleResolution": "node"
+    },
+    "include": ["./test/**/*.ts"]
+}

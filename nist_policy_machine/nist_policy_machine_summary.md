@@ -1,0 +1,186 @@
+# High-Level Design for the Policy Machine
+
+## Introduction
+
+The Policy Machine (PM) is a framework developed by the National Institute of Standards and Technology (NIST) to provide a unified approach for specifying and enforcing a wide range of access control policies. This design outlines how the PM's core components can be integrated into a cloud environment running on Kubernetes to achieve dynamic and fine-grained access control.
+
+## Core Components
+
+The PM consists of several fundamental elements:
+
+### Policy Elements
+
+1. **Users (U):** Entities that request access to resources (e.g., human users, services).
+2. **User Attributes (UA):** Properties or characteristics assigned to users (e.g., roles, groups).
+3. **Objects (O):** Resources that need protection (e.g., files, services, APIs).
+4. **Object Attributes (OA):** Properties assigned to objects (e.g., classifications, labels).
+5. **Operations (OP):** Actions that can be performed on objects (e.g., read, write, execute).
+
+### Relations and Associations
+
+- **Assignments (→):** Relationships that assign users to user attributes and objects to object attributes.
+- **Associations:** Define which operations a user attribute can perform on an object attribute.
+
+### Functions and Constraints
+
+- **Functions:** Procedures that dynamically modify policy elements or relationships based on events.
+- **Constraints:** Conditions that restrict access based on context (e.g., time, location).
+
+## System Architecture
+
+The high-level architecture of the Policy Machine is depicted below.
+
+```mermaid
+graph TD
+    subgraph Policy Machine
+        U[Users]
+        UA[User Attributes]
+        O[Objects]
+        OA[Object Attributes]
+        OP[Operations]
+        U -->|assigned to| UA
+        O -->|assigned to| OA
+        UA -- Assignments --> OA
+        UA -- Associations --> OA
+        UA -- Constraints --> OA
+        UA -- Functions --> OA
+        OP --> Associations
+    end
+```
+
+### Explanation
+
+- **Users (U)** are assigned to **User Attributes (UA)**.
+- **Objects (O)** are assigned to **Object Attributes (OA)**.
+- **Assignments** connect users to user attributes and objects to object attributes.
+- **Associations** between **UA** and **OA** determine which **Operations (OP)** are permitted.
+- **Functions** and **Constraints** provide dynamic and contextual policy enforcement.
+
+## Integration with Kubernetes
+
+To implement the Policy Machine in a Kubernetes environment, we map PM components to Kubernetes concepts.
+
+### Mapping Components
+
+- **Users (U):** Kubernetes users or service accounts.
+- **User Attributes (UA):** Kubernetes Roles and ClusterRoles.
+- **Objects (O):** Kubernetes resources (Pods, Services, ConfigMaps).
+- **Object Attributes (OA):** Labels, annotations, or namespaces on resources.
+- **Operations (OP):** Kubernetes API verbs (get, list, create, update, delete).
+
+### Kubernetes Policy Architecture
+
+```mermaid
+graph TD
+    subgraph Kubernetes Cluster
+        U[Users / Service Accounts]
+        UA[Kubernetes Roles]
+        O[Kubernetes Resources]
+        OA[Resource Labels / Namespaces]
+        OP[Kubernetes API Verbs]
+        U -->|RoleBinding| UA
+        O --> OA
+        UA -- RBAC Policies --> OA
+        UA -- Network Policies --> OA
+        UA -- Constraints --> OA
+        UA -- Functions --> OA
+    end
+```
+
+### Explanation
+
+- **Users** are bound to **Roles** via RoleBindings.
+- **Roles (UA)** define permissions (Operations) on resources.
+- **Resources (O)** are labeled or namespaced (OA) for attribute assignment.
+- **RBAC Policies** serve as **Associations** between **UA** and **OA**.
+- **Network Policies** and other Kubernetes features enforce additional **Constraints**.
+- **Functions** can be implemented using Admission Controllers or Custom Controllers to enforce dynamic policies.
+
+## Example Use Case
+
+### Scenario
+
+An organization wants to enforce the following policies in their Kubernetes cluster:
+
+- Developers can deploy applications only in the `development` namespace.
+- Applications in the `development` namespace cannot access databases in the `production` namespace.
+- Only the CI/CD service account can deploy to the `production` namespace after passing automated tests.
+
+### Implementation
+
+#### Policy Elements
+
+- **Users (U):**
+  - `dev-user1`, `dev-user2` (Developers)
+  - `cicd-service-account` (CI/CD Pipeline)
+- **User Attributes (UA):**
+  - `DeveloperRole`
+  - `CICDServiceRole`
+- **Objects (O):**
+  - Resources in `development` and `production` namespaces.
+- **Object Attributes (OA):**
+  - `Namespace: development`
+  - `Namespace: production`
+- **Operations (OP):**
+  - `deploy`, `access`, `modify`
+
+#### Assignments and Associations
+
+- **User to User Attribute Assignments:**
+  - `dev-user1` → `DeveloperRole`
+  - `dev-user2` → `DeveloperRole`
+  - `cicd-service-account` → `CICDServiceRole`
+- **Object to Object Attribute Assignments:**
+  - Resources labeled with `Namespace: development` → `DevelopmentResources`
+  - Resources labeled with `Namespace: production` → `ProductionResources`
+- **Associations:**
+  - `DeveloperRole` can `deploy` on `DevelopmentResources`
+  - `DeveloperRole` cannot `access` `ProductionResources`
+  - `CICDServiceRole` can `deploy` on `ProductionResources` after tests pass (Function)
+
+#### Constraints and Functions
+
+- **Constraint:** Prevent developers from deploying to `production`.
+- **Function:** CI/CD pipeline triggers a function that allows deployment to `production` only if tests pass.
+
+### Kubernetes Implementation
+
+- **RBAC Roles and RoleBindings:**
+  - Create `DeveloperRole` with permissions limited to the `development` namespace.
+  - Bind `dev-user1` and `dev-user2` to `DeveloperRole`.
+- **Network Policies:**
+  - Restrict network access between `development` and `production` namespaces.
+- **Admission Controllers:**
+  - Implement an admission webhook that checks if the `cicd-service-account` can deploy to `production` based on test results.
+
+## Functions and Constraints Implementation
+
+### Dynamic Policy Enforcement
+
+Implement functions using Kubernetes Custom Resource Definitions (CRDs) and Controllers.
+
+```mermaid
+graph TD
+    subgraph Functions and Constraints
+        Event[Event Trigger]
+        Function[Function Controller]
+        Policy[Policy Adjustment]
+        KubernetesAPI[Kubernetes API]
+        Event --> Function --> Policy --> KubernetesAPI
+    end
+```
+
+- **Event Trigger:** Test suite completion, time-based triggers, etc.
+- **Function Controller:** Custom logic to modify policies.
+- **Policy Adjustment:** Update RoleBindings or network policies accordingly.
+
+## Conclusion
+
+Integrating the Policy Machine into a Kubernetes environment enables organizations to enforce complex and dynamic access control policies. By leveraging Kubernetes' native features and extending them with PM concepts, we achieve a scalable and flexible security architecture.
+
+## Next Steps
+
+- **Define Detailed Policies:** Elaborate on specific access control requirements.
+- **Implement Controllers:** Develop custom controllers for dynamic policy adjustments.
+- **Testing and Validation:** Ensure policies work as intended through rigorous testing.
+- **Monitoring and Auditing:** Set up monitoring to track policy enforcement and access attempts.

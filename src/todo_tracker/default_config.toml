@@ -1,0 +1,44 @@
+# .todo-tracker.toml
+# Configuration for the TODO tracker CLI.
+# Place this file in your repository root.
+
+# Tags to scan for (case-insensitive)
+tags = ["TODO", "FIXME", "HACK", "XXX", "BUG"]
+
+# Custom tags beyond the built-in set
+custom_tags = []
+
+# Paths to exclude (in addition to .gitignore)
+exclude = [
+    "vendor/**",
+    "node_modules/**",
+    "*.generated.*",
+    "*.pb.go",
+    "*.min.js",
+]
+
+# Paths to include (if set, only these paths are scanned)
+# include = ["src/**", "lib/**"]
+
+# Days before a TODO is considered stale
+stale_days = 90
+
+# Regex for extracting ticket references
+ticket_pattern = "[A-Z]{2,10}-\\d+"
+
+[output]
+format = "table"           # table, json, csv, markdown, sarif, count
+color = "auto"             # auto, always, never
+context_lines = 0          # lines of context around each TODO
+show_blame = false         # include git blame info (slower)
+relative_paths = true
+
+[storage]
+db_path = ".todo-cache/todos.db"
+cache_path = ".todo-cache/"
+
+[ci]
+fail_on_stale = false      # fail if any stale TODOs exist
+fail_on_fixme = false      # fail if any FIXMEs exist
+max_todos = 0              # maximum total TODOs (0 = no limit)
+max_stale = 0              # maximum stale TODOs (0 = no limit)

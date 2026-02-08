@@ -1,0 +1,65 @@
+[user]
+	name = Rick Erickson
+	email = rerickson@linkedin.com
+	signingkey = /Users/rerickso/.ssh/rerickso_at_linkedin.com_ssh_key.pub
+
+[core]
+    editor = code --wait
+    autocrlf = input
+
+[merge]
+    tool = vscode
+
+[mergetool "vscode"]
+    cmd = code --wait $MERGED
+
+[diff]
+    tool = vscode
+
+[difftool "vscode"]
+    cmd = code --wait --diff $LOCAL $REMOTE
+[alias]
+	amend = commit --amend --no-edit
+	bclean = !git branch --merged | egrep -v '(^\\*|main|dev)' | xargs -n 1 git branch -d
+	cp = cherry-pick
+	del = reset --hard
+	fap = fetch --all --prune
+	lg = log --color --graph --pretty=format:'%C(auto)%h%d %s %C(blue)<%an> %C(green)(%ad)' --abbrev-commit --date=relative
+	nuke = !git rm -r --cached $(git ls-files) && git clean -xdff && git reset --hard HEAD
+	remotes = remote -v
+	rhead = !git log origin/$(git rev-parse --abbrev-ref HEAD) -n 1
+	s = !git fap && git pull --rebase
+	scrub = !git reset --hard && git clean -xdff
+	squash = "!f() { git rebase -i HEAD~\"$1\"; }; f"
+	staged = diff --cached
+	track = !git branch --set-upstream-to=origin/$(git rev-parse --abbrev-ref HEAD)
+	tree = log --graph --oneline --all --decorate --pretty=format:'%C(auto)%h %C(cyan)%d %C(auto)%G? %s %C(cyan)(%an) %C(yellow)(%ad)%C(reset)' --date=short
+	treeb = "!sh -c 'branch=\"${1:-HEAD}\"; git log --graph --oneline --decorate --pretty=format:\"%C(auto)%h %C(cyan)%d %C(auto)%G? %s %C(cyan)(%an) %C(yellow)(%ad)%C(reset)\" --date=short $branch' -"
+	undo = reset --soft HEAD^
+	unstage = reset HEAD --
+	wip = commit -m 'WIP'
+	unlock = !echo \"unlock\" | gpg --sign > /dev/null && echo \"GPG passphrase cached\"
+	se = "!f() { git submodule foreach \"$@\"; }; f"
+[pull]
+    rebase = true
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
+[protocol "file"]
+	allow = always
+[url "git@github.com:"]
+	insteadOf = https://github.com/
+[commit]
+	gpgsign = true
+[gpg]
+	format = ssh
+[tag]
+	gpgsign = true
+[gpg "ssh"]
+	allowedSignersFile = /Users/rerickso/.config/git/allowedSigners
+[url "ssh://org-254960183@github.com/project-solstice/"]
+	insteadOf = https://github.com/project-solstice/
+[url "git@github.com:project-solstice/"]
+	insteadOf = https://github.com/project-solstice/
