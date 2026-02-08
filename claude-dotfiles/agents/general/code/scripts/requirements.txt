@@ -1,0 +1,5 @@
+# PR Quality Check - No external dependencies required for main script
+# All functionality uses Python 3 standard library
+
+# Testing dependencies
+pytest>=7.0.0

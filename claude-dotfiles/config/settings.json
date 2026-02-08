@@ -1,0 +1,11 @@
+{
+  "model": "sonnet[1m]",
+  "statusLine": {
+    "type": "command",
+    "command": "/Users/rerickso/.claude/statusline-command.sh"
+  },
+  "alwaysThinkingEnabled": true,
+  "enabledPlugins": {
+    "rust-analyzer-lsp@claude-plugins-official": true
+  }
+}
