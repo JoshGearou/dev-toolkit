@@ -8,11 +8,12 @@ These agents serve as domain experts for specific technologies. They provide gui
 
 ## Agents by Category
 
-### Programming Languages (5)
+### Programming Languages (6)
 
 | Agent | Expertise |
 |-------|-----------|
 | [python-expert](python-expert.md) | Type hints, async, pytest, mypy, Pythonic patterns |
+| [typescript-expert](typescript-expert.md) | Strict TS, TypeBox, Elysia, Bun/Turbo, oxlint/Prettier |
 | [golang-expert](golang-expert.md) | Goroutines, channels, interfaces, Go idioms |
 | [rust-expert](rust-expert.md) | Ownership, borrowing, lifetimes, cargo |
 | [java-expert](java-expert.md) | JVM, Spring, Maven/Gradle, enterprise patterns |
